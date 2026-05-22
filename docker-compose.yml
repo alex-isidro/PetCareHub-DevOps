@@ -1,9 +1,7 @@
 services:
 
   petcarehub:
-    build: .
-
-    image: challenge-clyvo:v1
+    image: alexander0isidro/petcarehub-devops:v1
 
     container_name: petcarehub
 
