@@ -1,26 +1,10 @@
-# Build stage
-FROM maven:3.9.9-eclipse-temurin-17 AS build
-
-WORKDIR /build
-
-COPY pom.xml .
-COPY src ./src
-
-RUN mvn clean package -DskipTests
-
-# Runtime stage
-FROM eclipse-temurin:17-jre
-
-RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
-
+FROM eclipse-temurin:17-jdk AS build
 WORKDIR /app
+COPY . .
+RUN ./mvnw -DskipTests package
 
-COPY --from=build /build/target/*.jar app.jar
-
-RUN chown -R appuser:appgroup /app
-
-USER appuser
-
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
