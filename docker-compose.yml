@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
 
   petcare-api:
-    build: .
+    image: alexander0isidro/petcarehub-devops:v3
 
     container_name: petcare-api
 
