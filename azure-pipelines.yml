@@ -35,7 +35,7 @@ steps:
   - script: |
       chmod +x ./mvnw
       ./mvnw -B clean verify
-    workingDirectory: 'backend'
+    workingDirectory: '$(Build.SourcesDirectory)/backend'
     displayName: 'Build e testes Maven'
     env:
       RSA_PRIVATE_KEY: 'file:$(privateKey.secureFilePath)'
@@ -45,7 +45,7 @@ steps:
   - task: CopyFiles@2
     displayName: 'Preparar artefato'
     inputs:
-      SourceFolder: 'backend/target'
+      SourceFolder: '$(Build.SourcesDirectory)/backend/target'
       Contents: '*.jar'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
